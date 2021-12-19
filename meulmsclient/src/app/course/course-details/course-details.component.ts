@@ -42,8 +42,6 @@ export class CourseDetailsComponent implements OnInit {
     error=>{
       console.log(error)
     })
-
-
   }
 
   // getCurrentUserAssignments(){
