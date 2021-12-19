@@ -1,0 +1,42 @@
+<div class="container">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a [routerLink]="['/']"><img src="/assets/images/logo.png" style="max-height: 70px;" alt="logo"> </a>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a class="nav-link px-2 link-secondary" [routerLink]="['/routePath']" routerLinkActive="active">Ana Sayfa</a>
+      </li>
+      <li><a class="nav-link px-2 link-dark" [routerLink]="['/course']" routerLinkActive="active">Dersler</a></li>
+      <!-- <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">About</a></li> -->
+    </ul>
+
+
+    <!-- <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-outline-primary me-2" routerLink="/account/login" >Giriş Yap</button>
+      </div> -->
+
+    <ng-container *ngIf="(currentUser$ | async)?.displayName=== '' ">
+      <button type="button" class="btn btn-outline-primary me-2" routerLink="/account/login">Giriş Yap</button>
+    </ng-container>
+
+    <ng-container *ngIf="(currentUser$ | async)?.displayName !== '' ">
+      <div class="dropdown ml-3 mr-5" dropdown>
+        <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle><strong>{{ (currentUser$ | async)?.displayName}}</strong></a>
+        <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
+        <a class="dropdown-item d-flex align-item-center py-2">
+          <i class="fa fa-user mr-3 my-2">  Profil</i>
+        </a>
+        <a class="dropdown-item d-flex align-item-center py-2">
+          <i class="fa fa-book mr-3" [routerLink]="['myCourses']"> Derslerim</i>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a (click)="logOut()" class="dropdown-item d-flex align-item-center py-2">
+          <i class="fa fa-sign-out mr-3"> Çıkış Yap</i>
+        </a>
+        </div>
+      </div>
+    </ng-container>
+
+  </header>
+</div>

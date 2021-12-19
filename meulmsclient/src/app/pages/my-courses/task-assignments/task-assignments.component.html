@@ -1,0 +1,30 @@
+<dx-data-grid 
+id="grid" 
+[dataSource]="dataSource" 
+[repaintChangesOnly]="true" 
+[showBorders]="true"
+[showRowLines]="true"
+[showColumnLines]="true"
+> [allowColumnResizing]="true"
+[columnResizingMode]="nextColumn"
+>
+    
+  
+  <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-editing mode="cell" [refreshMode]="refreshMode" [allowAdding]="false" [allowUpdating]="true"
+        [allowDeleting]="false">
+    </dxo-editing>
+
+    <!-- <dxi-column dataField="name"  [allowEditing]="false"></dxi-column> -->
+    <dxi-column dataField="id" sortOrder="desc" [visible]="false" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="userFullName" width="200px" caption="Ad Soyad" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="filePath" width="350px" caption="Ödev" [allowEditing]="false" cellTemplate="file"></dxi-column>
+    <dxi-column dataField="score" caption="Not"></dxi-column>
+
+    <div *dxTemplate="let cell of 'file'">
+      <div *ngIf="cell.data.filePath.length >= 3 ">
+        <a href="https://localhost:44336/assignments/{{cell.text}}" target="_blank">{{cell.text}}</a>
+      </div>
+    </div>
+
+</dx-data-grid>

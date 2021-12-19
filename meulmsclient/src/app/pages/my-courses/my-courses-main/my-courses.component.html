@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div *ngFor="let course of courses" class="list-group">
+                <a href="myCourses#" class="list-group-item">{{course.name}}</a>
+                <button *ngFor="let task of course.tasks" (click)='getTaskId(task.id)' class="list-group-item">{{task.title}}</button>
+            
+                <!-- <div class="list-group">
+                  <button *ngFor="let task of course.tasks" (click)='getTaskId(task.id)' class="list-group-item">{{task.title}}</button>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-md-5">
+            <app-task-assignments></app-task-assignments>
+        </div>
+    </div>
+</div>
+
+

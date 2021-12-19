@@ -1,0 +1,9 @@
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 g-3">
+            <div *ngFor="let course of courses" class="mx-1 my-2">
+                <app-course-item [course]='course'></app-course-item>
+            </div>
+        </div>
+    </div>
+</div>
