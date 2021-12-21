@@ -17,6 +17,7 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Configuration
 
             builder.HasMany(I => I.Tasks).WithOne(I => I.Course).HasForeignKey(I => I.CourseId);
             builder.HasMany(I => I.People).WithOne(I => I.Course).HasForeignKey(I => I.PersonId);
+            builder.HasMany(I => I.Articles).WithOne(I => I.Course).HasForeignKey(I => I.CourseId);
         }
     }
 }

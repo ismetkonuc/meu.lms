@@ -17,11 +17,15 @@ namespace meu.lms.business.Containers.MicrosoftIoC
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IAssignmentService, AssignmentManager>();
             services.AddScoped<ICourseService, CourseManager>();
+            services.AddScoped<IArticleService, ArticleManager>();
+
 
             services.AddScoped<ITaskDal, EfTaskRepository>();
             services.AddScoped<ICourseDal, EfCourseRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
             services.AddScoped<IAssignmentDal, EfAssignmentRepository>();
+            services.AddScoped<IArticleDal, EfArticleRepository>();
+
 
 
             //services.AddScoped(typeof(IGenericService<>), typeof(Generic))

@@ -22,6 +22,7 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts
             //builder.ApplyConfiguration(new AppRoleConfiguration());
             builder.ApplyConfiguration(new CoursePeopleConfiguration());
             builder.ApplyConfiguration(new AssignmentConfiguration());
+            builder.ApplyConfiguration(new ArticleConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -33,5 +34,6 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts
         //public DbSet<AppRole> AppRoles { get; set; }
         public DbSet<CoursePeople> CoursePeoples { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Article> Articles { get; set; }
     }
 }

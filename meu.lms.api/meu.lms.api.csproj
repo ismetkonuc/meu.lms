@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Models\ArticleModels\" />
     <Folder Include="wwwroot\assignments\" />
   </ItemGroup>
 

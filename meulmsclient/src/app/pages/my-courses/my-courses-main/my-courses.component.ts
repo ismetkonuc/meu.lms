@@ -36,6 +36,7 @@ export class MyCoursesComponent implements OnInit {
   loadMyCourses() {
     this.myCoursesService.getMyCourses().subscribe(response => {
       this.courses = response;
+      console.log(response)
     })
   }
 

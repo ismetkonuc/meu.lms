@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
+using meu.lms.api.CustomFilters;
 using meu.lms.api.DevExtreme;
 using meu.lms.api.Models;
 using meu.lms.api.Models.CourseModels;
@@ -20,6 +23,7 @@ using meu.lms.api.Models.TaskModels;
 using meu.lms.business.Interfaces;
 using meu.lms.dto.DTOs.AssignmentDTOs;
 using meu.lms.dto.DTOs.TaskDTOs;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
@@ -36,7 +40,8 @@ namespace meu.lms.api.Controllers
         private readonly ICourseDal _courseDal;
         private readonly ITaskDal _taskDal;
         private readonly IMapper _mapper;
-        public AssignmentsController(IMapper mapper, IAssignmentDal assignmentDal, ICourseDal courseDal, ITaskDal taskDal, UserManager<AppUser> userManager, IAppUserService appUserService) : base(assignmentDal)
+        private readonly IWebHostEnvironment _appEnvironment;
+        public AssignmentsController(IMapper mapper, IAssignmentDal assignmentDal, ICourseDal courseDal, ITaskDal taskDal, UserManager<AppUser> userManager, IAppUserService appUserService, IWebHostEnvironment appEnvironment) : base(assignmentDal)
         {
             _mapper = mapper;
             _assignmentDal = assignmentDal;
@@ -44,6 +49,7 @@ namespace meu.lms.api.Controllers
             _taskDal = taskDal;
             _userManager = userManager;
             _appUserService = appUserService;
+            _appEnvironment = appEnvironment;
         }
 
         [HttpPost]
@@ -79,14 +85,18 @@ namespace meu.lms.api.Controllers
             return Created("", assignmentAddModel);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromForm] AssignmentUpdateModel assignmentUpdateModel)
+        [HttpPut]
+        [Consumes("multipart/form-data")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult Update([FromForm] AssignmentUpdateModel assignmentUpdateModel)
         {
 
-            if (id != assignmentUpdateModel.Id)
-            {
-                return BadRequest("Geçersiz Id");
-            }
+            var appuserId = Convert.ToInt32(HttpContext.User?.Claims?.FirstOrDefault(I => I.Type == ClaimTypes.NameIdentifier)?.Value);
+
+            var oldAssignment = _assignmentDal.GetSpesificAssignment(appuserId, assignmentUpdateModel.TaskId);
+
+            assignmentUpdateModel.AppUserId = appuserId;
+            assignmentUpdateModel.Id = oldAssignment.Id;
 
 
             List<string> acceptedExtensions = new List<string>()
@@ -99,6 +109,15 @@ namespace meu.lms.api.Controllers
             {
                 assignmentUpdateModel.AttachmentPath = uploadModel.NewName;
                 assignmentUpdateModel.IsSent = true;
+
+                string webRootPath = _appEnvironment.WebRootPath + "\\assignments\\";
+                var fullPath = webRootPath + oldAssignment.AttachmentPath;
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
             }
 
             else if (uploadModel.UploadState == UploadState.NotExist)
@@ -160,6 +179,7 @@ namespace meu.lms.api.Controllers
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("allAssignments")]
+        [TypeFilter(typeof(ValidInstructorRole))]
         //public IActionResult GetAllAssignments(DataSourceLoadOptions loadOptions)
         public IActionResult GetAllAssignments()
         {
@@ -216,6 +236,7 @@ namespace meu.lms.api.Controllers
 
         [HttpGet("assignScore/{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
+        [TypeFilter(typeof(ValidInstructorRole))]
         public async Task<IActionResult> AssignScore(int id) // and need taskId
         {
             var assignments = new List<Assignment>();

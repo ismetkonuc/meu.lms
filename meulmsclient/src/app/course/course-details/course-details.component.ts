@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IAssignment } from 'src/app/shared/models/IAssignment';
@@ -57,6 +57,8 @@ export class CourseDetailsComponent implements OnInit {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
 
+
+
     const formData: FormData = new FormData();
     formData.append('Attachment', this.file);
     formData.append('CourseId', "1");
@@ -68,12 +70,18 @@ export class CourseDetailsComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
 
-    return this.http.post('http://localhost:5000/api/assignments', formData,
-    {
-      headers : headers})
+    if(this.isItUpdate){
+      return this.http.put('http://localhost:5000/api/assignments/', formData, {headers : headers})
+    .subscribe(() => this.ngOnInit());
+    }
+
+    
+    return this.http.post('http://localhost:5000/api/assignments/', formData,{headers : headers})
     .subscribe(() => this.ngOnInit());
 
   }
+
+
 
   onClickFileInputButton(value:any, id:any): void {
     this.handledTaskId = id;

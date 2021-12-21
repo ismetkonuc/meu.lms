@@ -1,21 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using meu.lms.api.CustomFilters;
 using meu.lms.business.Interfaces;
-using meu.lms.dto.DTOs.AssignmentDTOs;
 using meu.lms.dto.DTOs.CourseDTOs;
 using meu.lms.entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace meu.lms.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class CoursesController : ControllerBase
     {
         private readonly ICourseService _courseService;
@@ -44,6 +41,7 @@ namespace meu.lms.api.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(ValidInstructorRole))]
         public IActionResult Create(CourseAddDto courseAddDto)
         {
 
@@ -53,6 +51,7 @@ namespace meu.lms.api.Controllers
         }
 
         [HttpPut("{id}")]
+        [TypeFilter(typeof(ValidInstructorRole))]
         public IActionResult Update(int id, CourseUpdateDto courseUpdateDto)
         {
 
@@ -68,11 +67,15 @@ namespace meu.lms.api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(ValidInstructorRole))]
         public IActionResult Delete(int id)
         {
             _courseService.Delete(new Course(){Id = id});
 
             return NoContent();
         }
+
+
+
     }
 }

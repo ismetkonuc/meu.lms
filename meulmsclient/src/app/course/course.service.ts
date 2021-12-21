@@ -10,24 +10,28 @@ import { ITask } from '../shared/models/ITask';
 
 export class CourseService {
 
-  constructor(private http:HttpClient) { }
+  headers = new HttpHeaders();
+
+  constructor(private http:HttpClient) { 
+    
+  }
 
   baseUrl = "http://localhost:5000/api/"
   course:ICourse = {id: 0, name : '', code:''};
   
   getCourses(){
-    return this.http.get<ICourse[]>(this.baseUrl + 'courses')
+    let currentUserToken = localStorage.getItem('token');
+    let headers = this.headers.set('Authorization', `Bearer ${currentUserToken}`)
+    
+    return this.http.get<ICourse[]>(this.baseUrl + 'courses', {headers})
   }
 
   getTasks(courseId:number){
 
     let currentUserToken = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
-
+    let headers = this.headers.set('Authorization', `Bearer ${currentUserToken}`)
+    
     return this.http.get<ITask[]>(this.baseUrl + 'tasks/' + courseId, {headers})
-    // return this.http.get<ITask[]>(this.baseUrl + 'tasks/' + courseId)
   }
 
   async getCourseName(courseId:number): Promise<any>{

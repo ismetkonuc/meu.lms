@@ -12,7 +12,7 @@ namespace meu.lms.entities.Concrete
 
         public List<CoursePeople> Courses { get; set; }
         public List<Assignment> Assignments { get; set; }
-
+        public List<Article> Articles { get; set; }
 
     }
 }

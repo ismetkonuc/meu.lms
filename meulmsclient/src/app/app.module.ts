@@ -16,17 +16,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
-import { DxTileViewModule, DxButtonModule, DxListModule, DxDataGridModule, DxSelectBoxModule, DxCheckBoxModule } from 'devextreme-angular';
+import { DxTileViewModule, DxButtonModule, DxListModule, DxDataGridModule, DxSelectBoxModule, DxCheckBoxModule, DxHtmlEditorModule, DxButtonGroupModule } from 'devextreme-angular';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { MyCoursesComponent } from './pages/my-courses/my-courses-main/my-courses.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MaterialModule } from 'src/material.module';
 import { TaskAssignmentsComponent } from './pages/my-courses/task-assignments/task-assignments.component';
+import { PostArticleComponent } from './pages/post-article/post-article.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     MyCoursesComponent,
-    TaskAssignmentsComponent
+    TaskAssignmentsComponent,
+    PostArticleComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,8 @@ import { TaskAssignmentsComponent } from './pages/my-courses/task-assignments/ta
     MaterialModule,
     DxSelectBoxModule,
     DxCheckBoxModule,
+    DxHtmlEditorModule,
+    DxButtonGroupModule
   ],
   providers: [],
   bootstrap: [AppComponent]

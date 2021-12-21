@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts;
 
 namespace meu.lms.dataaccess.Migrations
 {
     [DbContext(typeof(LmsDbContext))]
-    partial class LmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211220001419_AddedArticleTable")]
+    partial class AddedArticleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,17 +238,12 @@ namespace meu.lms.dataaccess.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Text")
                         .HasColumnType("ntext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("CourseId");
 
                     b.ToTable("Articles");
                 });
@@ -416,12 +413,6 @@ namespace meu.lms.dataaccess.Migrations
                     b.HasOne("meu.lms.entities.Concrete.AppUser", "AppUser")
                         .WithMany("Articles")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("meu.lms.entities.Concrete.Course", "Course")
-                        .WithMany("Articles")
-                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
