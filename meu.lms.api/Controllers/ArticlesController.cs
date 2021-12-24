@@ -10,6 +10,7 @@ using meu.lms.api.Models.ArticleModels;
 using meu.lms.business.Interfaces;
 using meu.lms.entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace meu.lms.api.Controllers
 {
@@ -21,10 +22,12 @@ namespace meu.lms.api.Controllers
 
         private readonly IArticleService _articleService;
         private readonly ICourseService _courseService;
-        public ArticlesController(IArticleService articleService, ICourseService courseService)
+        private readonly UserManager<AppUser> _userManager;
+        public ArticlesController(IArticleService articleService, ICourseService courseService, UserManager<AppUser> userManager)
         {
             _articleService = articleService;
             _courseService = courseService;
+            _userManager = userManager;
         }
 
 
@@ -37,18 +40,46 @@ namespace meu.lms.api.Controllers
         [HttpGet("{courseId}")]
         public IActionResult GetCourseArticles(int courseId)
         {
-            return Ok(_articleService.GetAll().Where(I=>I.CourseId==courseId).ToList());
+
+            var coursePosts = _articleService.GetAll().Where(I => I.CourseId == courseId).ToList();
+
+            List<ArticleListViewModel> articleListViewModels = new List<ArticleListViewModel>();
+
+            ArticleListViewModel articleListViewModel = new ArticleListViewModel();
+
+            foreach (var coursePost in coursePosts)
+            {
+
+                var appUser = _userManager.FindByIdAsync(coursePost.AppUserId.ToString()).Result;
+
+
+                articleListViewModels.Add(new ArticleListViewModel()
+                {
+                    AppUserFullName = $"{appUser.Name} {appUser.Surname}",
+                    Id = coursePost.Id,
+                    Text = coursePost.Text,
+                    PostedTime = coursePost.PostedTime,
+                    Title = coursePost.Title
+                });
+
+                //articleListViewModel.AppUserFullName = $"{appUser.Name} {appUser.Surname}";
+                //articleListViewModel.Id = coursePost.Id;
+                //articleListViewModel.Text = coursePost.Text;
+            }
+
+
+            return Ok(articleListViewModels);
         }
 
-        [HttpGet("{articleId}")]
-        public IActionResult GetCourseArticleWithId(int articleId)
-        {
-            return Ok(_articleService.GetAll().Single(I => I.CourseId == articleId));
-        }
+        //[HttpGet("{articleId}")]
+        //public IActionResult GetCourseArticleWithId(int articleId)
+        //{
+        //    return Ok(_articleService.GetAll().Single(I => I.CourseId == articleId));
+        //}
 
         [HttpPost]
         [TypeFilter(typeof(ValidInstructorRole))]
-        public IActionResult Publish(ArticleAddViewModel articleAddViewModel)
+        public IActionResult Publish([FromBody] ArticleAddViewModel articleAddViewModel)
         {
 
             var appuserId = Convert.ToInt32(HttpContext.User?.Claims?.FirstOrDefault(I => I.Type == ClaimTypes.NameIdentifier)?.Value);
@@ -58,7 +89,8 @@ namespace meu.lms.api.Controllers
             {
                 Text = articleAddViewModel.Text,
                 CourseId = articleAddViewModel.CourseId,
-                AppUserId = appuserId
+                AppUserId = appuserId,
+                Title = articleAddViewModel.Title
             });
 
             return Ok();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts;
 
 namespace meu.lms.dataaccess.Migrations
 {
     [DbContext(typeof(LmsDbContext))]
-    partial class LmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211221233601_AddedPostedTimeANDTitleColumnsInArticleTable")]
+    partial class AddedPostedTimeANDTitleColumnsInArticleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

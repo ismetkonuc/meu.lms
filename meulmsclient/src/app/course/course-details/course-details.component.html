@@ -2,7 +2,7 @@
   <h1>{{courseName}}</h1>
 </div>
 
-
+<app-course-posts [courseArticles] = 'courseArticles'></app-course-posts>
 
 <div class="container">
   <div class="row">
@@ -52,7 +52,7 @@
           </mat-tab>
 
           <mat-tab label="Gönderimlerim" *ngIf="courseTask.assignment.isSent">
-            
+
             <div class="my-2">
               <a href="https://localhost:44336/assignments/{{courseTask.assignment.attachmentPath}}"
                 target="_blank">{{courseTask.assignment.attachmentPath}}</a>
@@ -71,6 +71,10 @@
   </div>
 </div>
 
+
+<!-- <div class="col-md-12">
+  <p *ngFor="let courseArticle of courseArticles">{{convertPostsToHTML(courseArticle)}}</p>
+</div> -->
 
 
 

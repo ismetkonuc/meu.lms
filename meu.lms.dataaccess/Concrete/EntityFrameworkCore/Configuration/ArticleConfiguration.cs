@@ -12,7 +12,8 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Configuration
         {
             builder.HasKey(I => I.Id);
             builder.Property(I => I.Id).UseIdentityColumn();
-
+            builder.Property(I => I.PostedTime);
+            builder.Property(I => I.Title);
             builder.Property(I => I.Text).HasColumnType("ntext");
         }
     }

@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IArticle } from 'src/app/shared/models/IArticle';
 import { IAssignment } from 'src/app/shared/models/IAssignment';
 import { ITask } from 'src/app/shared/models/ITask';
+import { ArticleService } from 'src/app/shared/services/article.service';
 import { CourseService } from '../course.service';
 
 @Component({
@@ -16,32 +18,61 @@ export class CourseDetailsComponent implements OnInit {
 
   file: any;
   courseTasks: ITask[] = [];
+  courseArticles: IArticle[] = [];
   userAssignments: IAssignment[] = [];
   activatedRouteId: number;
-  courseName : string = '';
-  isItUpdate : boolean = false;
+  courseName: string = '';
+  isItUpdate: boolean = false;
   handledTaskId: number = 0;
-  
-  constructor(private courseService : CourseService, private activatedRoute:ActivatedRoute, private http:  HttpClient) {
+  counter = 0;
+  panelOpenState = false;
+  constructor(private courseService: CourseService, private activatedRoute: ActivatedRoute, private http: HttpClient, private articleService: ArticleService) {
     this.activatedRouteId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
-   }
+
+    this.loadCourse();
+    this.getPosts();
+  }
 
 
   ngOnInit(): void {
-    this.loadCourse();
+    
     // this.getCurrentUserAssignments();
   }
 
-  async loadCourse(){
+  ngAfterViewInit():void{
+    // console.log(document.getElementById("posts"))
+  }
 
-    this.courseName  = await this.courseService.getCourseName(this.activatedRouteId)
-  
+
+  getPosts() {
+    this.articleService.getPostsByCourseId(this.activatedRouteId).subscribe(response => {
+      this.courseArticles = response;
+      this.courseArticles.forEach(article => {
+        document.getElementById("posts")?.insertAdjacentHTML("afterbegin", article.text);
+      });
+      
+    })
+  }
+
+  convertPostsToHTML(post: any) {
+    document.getElementById("posts")?.insertAdjacentHTML("afterbegin", post.text);
+    console.log(++this.counter);
+    // if (this.counter !== this.courseArticles.length) {
+    //   ++this.counter;
+    // }
+  }
+
+
+  async loadCourse() {
+
+    this.courseName = await this.courseService.getCourseName(this.activatedRouteId)
+
     this.courseService.getTasks(this.activatedRouteId).subscribe(courseTasks => {
       this.courseTasks = courseTasks;
     },
-    error=>{
-      console.log(error)
-    })
+      error => {
+        console.log(error)
+      })
   }
 
   // getCurrentUserAssignments(){
@@ -53,7 +84,7 @@ export class CourseDetailsComponent implements OnInit {
 
 
   onChangeFileInput() {
-    
+
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
 
@@ -70,20 +101,20 @@ export class CourseDetailsComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
 
-    if(this.isItUpdate){
-      return this.http.put('http://localhost:5000/api/assignments/', formData, {headers : headers})
-    .subscribe(() => this.ngOnInit());
+    if (this.isItUpdate) {
+      return this.http.put('http://localhost:5000/api/assignments/', formData, { headers: headers })
+        .subscribe(() => this.ngOnInit());
     }
 
-    
-    return this.http.post('http://localhost:5000/api/assignments/', formData,{headers : headers})
-    .subscribe(() => this.ngOnInit());
+
+    return this.http.post('http://localhost:5000/api/assignments/', formData, { headers: headers })
+      .subscribe(() => this.ngOnInit());
 
   }
 
 
 
-  onClickFileInputButton(value:any, id:any): void {
+  onClickFileInputButton(value: any, id: any): void {
     this.handledTaskId = id;
     this.isItUpdate = value;
     this.fileInput.nativeElement.click();

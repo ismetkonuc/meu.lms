@@ -17,13 +17,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import { DxTileViewModule, DxButtonModule, DxListModule, DxDataGridModule, DxSelectBoxModule, DxCheckBoxModule, DxHtmlEditorModule, DxButtonGroupModule } from 'devextreme-angular';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { MyCoursesComponent } from './pages/my-courses/my-courses-main/my-courses.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MaterialModule } from 'src/material.module';
 import { TaskAssignmentsComponent } from './pages/my-courses/task-assignments/task-assignments.component';
 import { PostArticleComponent } from './pages/post-article/post-article.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +55,7 @@ import { PostArticleComponent } from './pages/post-article/post-article.componen
     DxSelectBoxModule,
     DxCheckBoxModule,
     DxHtmlEditorModule,
-    DxButtonGroupModule
+    DxButtonGroupModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

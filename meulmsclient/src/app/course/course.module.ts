@@ -11,12 +11,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { CoursePostsComponent } from './course-posts/course-posts.component';
 
 @NgModule({
   declarations: [
     CourseComponent,
     CourseItemComponent,
-    CourseDetailsComponent
+    CourseDetailsComponent,
+    CoursePostsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatBottomSheetModule,
     MatCardModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule
   ],
   exports: [CourseComponent]
 })
