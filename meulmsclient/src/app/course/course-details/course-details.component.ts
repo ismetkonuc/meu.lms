@@ -27,39 +27,22 @@ export class CourseDetailsComponent implements OnInit {
   counter = 0;
   panelOpenState = false;
   constructor(private courseService: CourseService, private activatedRoute: ActivatedRoute, private http: HttpClient, private articleService: ArticleService) {
+    
     this.activatedRouteId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
+  
+  }
 
+
+  ngOnInit(): void {
     this.loadCourse();
     this.getPosts();
   }
 
 
-  ngOnInit(): void {
-    
-    // this.getCurrentUserAssignments();
-  }
-
-  ngAfterViewInit():void{
-    // console.log(document.getElementById("posts"))
-  }
-
-
   getPosts() {
     this.articleService.getPostsByCourseId(this.activatedRouteId).subscribe(response => {
-      this.courseArticles = response;
-      this.courseArticles.forEach(article => {
-        document.getElementById("posts")?.insertAdjacentHTML("afterbegin", article.text);
-      });
-      
+      this.courseArticles = response; 
     })
-  }
-
-  convertPostsToHTML(post: any) {
-    document.getElementById("posts")?.insertAdjacentHTML("afterbegin", post.text);
-    console.log(++this.counter);
-    // if (this.counter !== this.courseArticles.length) {
-    //   ++this.counter;
-    // }
   }
 
 

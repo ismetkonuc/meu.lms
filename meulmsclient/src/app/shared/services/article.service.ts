@@ -23,8 +23,10 @@ export class ArticleService {
     let currentUserToken = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
+
+
     // return this.http.get<IArticle[]>('http://localhost:5000/api/Articles/'+ courseId, {headers:headers})
-    return this.http.get<IArticle[]>('http://localhost:5000/api/Articles/'+ courseId)
+    return this.http.get<IArticle[]>('https://localhost:44336/api/Articles/'+ courseId, {headers:headers} )
   
   }
 

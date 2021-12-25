@@ -2,14 +2,20 @@
   <h1>{{courseName}}</h1>
 </div>
 
-<app-course-posts [courseArticles] = 'courseArticles'></app-course-posts>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 my-2">
+      <app-course-posts [courseId] = 'activatedRouteId'></app-course-posts>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="row">
     <div *ngFor="let courseTask of courseTasks" class="col-md-12 my-2">
 
       <div>
-        <h2>{{courseTask.title}} -- {{courseTask.creationDate}}</h2>
+        <h2>{{courseTask.title}} -- {{courseTask.creationDate | date: 'dd/MM/yyyy - HH:mm:ss'}}</h2>
       </div>
 
       <!-- Tab Başlangıç -->

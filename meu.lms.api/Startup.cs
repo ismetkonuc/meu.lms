@@ -1,5 +1,6 @@
 using AutoMapper;
 using meu.lms.api.Extensions;
+using meu.lms.api.Hubs;
 using meu.lms.api.Initializers;
 using meu.lms.business.Containers.MicrosoftIoC;
 using meu.lms.business.Interfaces;
@@ -73,7 +74,10 @@ namespace meu.lms.api
             });
 
 
-            
+            services.AddSignalR(o =>
+            {
+                o.EnableDetailedErrors = true;
+            });
 
             services.AddCors();
 
@@ -133,6 +137,7 @@ namespace meu.lms.api
                 //    pattern: "{controller=Home}/{action=Index}/{id?}"
                 //);
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/MessageHub");
             });
         }
     }

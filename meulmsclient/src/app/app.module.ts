@@ -22,12 +22,15 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { MaterialModule } from 'src/material.module';
 import { TaskAssignmentsComponent } from './pages/my-courses/task-assignments/task-assignments.component';
 import { PostArticleComponent } from './pages/post-article/post-article.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ChatComponent } from './pages/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
     MyCoursesComponent,
     TaskAssignmentsComponent,
-    PostArticleComponent
+    PostArticleComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { PostArticleComponent } from './pages/post-article/post-article.componen
     DxCheckBoxModule,
     DxHtmlEditorModule,
     DxButtonGroupModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

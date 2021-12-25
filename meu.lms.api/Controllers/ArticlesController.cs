@@ -68,7 +68,7 @@ namespace meu.lms.api.Controllers
             }
 
 
-            return Ok(articleListViewModels);
+            return Ok(articleListViewModels.OrderByDescending(I=>I.PostedTime));
         }
 
         //[HttpGet("{articleId}")]

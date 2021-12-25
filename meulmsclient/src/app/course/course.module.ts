@@ -13,7 +13,10 @@ import {MatCardModule} from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CoursePostsComponent } from './course-posts/course-posts.component';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { DxListModule, DxTemplateModule } from 'devextreme-angular';
+import { MatDividerModule } from '@angular/material/divider';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     CourseComponent,
@@ -32,7 +35,12 @@ import { CoursePostsComponent } from './course-posts/course-posts.component';
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    BrowserModule,
+    DxListModule,
+    DxTemplateModule,
+    MatDividerModule,
+    ToastrModule 
   ],
   exports: [CourseComponent]
 })

@@ -4,6 +4,7 @@ import 'devextreme/ui/html_editor/converters/markdown';
 import { IArticleAddModel } from 'src/app/shared/models/IArticlesAddModel';
 import { CourseService } from 'src/app/course/course.service';
 import { ICourse } from 'src/app/shared/models/ICourse';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-post-article',
   templateUrl: './post-article.component.html',
@@ -17,7 +18,7 @@ export class PostArticleComponent implements OnInit {
   title:string='';
   selected = '';
   articleModel:IArticleAddModel = {courseId: 0, text:this.valueContent, title:''};
-  constructor(private articleService:ArticleService, private courseService:CourseService) {
+  constructor(private articleService:ArticleService, private courseService:CourseService, private toastr: ToastrService) {
     this.valueContent = articleService.getMarkup();
    }
 
@@ -30,7 +31,7 @@ export class PostArticleComponent implements OnInit {
   }
 
   printData(){
-
+    this.showSuccess()
     this.articleModel.courseId = parseInt(this.selected);
     this.articleModel.text = this.valueContent;
     this.articleModel.title = this.title;
@@ -44,6 +45,10 @@ export class PostArticleComponent implements OnInit {
     this.courseService.getCourses().subscribe(response=>{
       this.courses = response;
     });
+  }
+
+  showSuccess() {
+    this.toastr.success('Gönderi Başarıyla Yayınlandı!', 'Yayınlandı...');
   }
 
 
