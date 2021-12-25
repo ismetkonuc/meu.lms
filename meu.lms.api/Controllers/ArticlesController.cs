@@ -95,5 +95,17 @@ namespace meu.lms.api.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("id")]
+        public IActionResult Delete(int id)
+        {
+
+            var article = _articleService.GetAll().Single(I => I.Id == id);
+
+            _articleService.Delete(article);
+
+            return Ok();
+        }
+
     }
 }
