@@ -1,19 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-2">
-      <mat-form-field appearance="fill">
-        <mat-label>Ders Seç</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option *ngFor="let course of courses" value="{{course.id}}">{{course.name}}</mat-option>
-          <!-- <mat-option value="option2">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option> -->
-        </mat-select>
-      </mat-form-field>
       
     </div>
+    
     <div class="col-md-8">
-      <div class="col-md-12">
-        <p><input type="text" id="username" name="username" [(ngModel)]="title"></p>
+      
+      <div class="example-form">
+        <input style="height: 40px;" class="example-full-width my-2" type="text" [(ngModel)]="title" placeholder="Başlık">
       </div>
     
       <dx-html-editor [height]="300" [(valueType)]="editorValueType" [(value)]="valueContent">
@@ -51,6 +45,16 @@
       <div class="options my-2">
 
         <!-- <button class="btn btn-md" (click)='printData()' class="list-group-item">Yayınla</button> -->
+
+        <form class="example-form">
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Ders Seç</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option *ngFor="let course of courses" value="{{course.id}}">{{course.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>  
+
       <button mat-flat-button color="primary" (click)='printData()' class="stretched-link">Yayınla</button>
       </div>
 
@@ -58,24 +62,3 @@
     <div class="col-md-2"></div>
   </div>
 </div>
-
-
-<!-- 
-<div class="options">
-
-    <button class="btn btn-md" (click)='printData()' class="list-group-item">Tıkla</button>
-
-  <dx-button-group
-    (onSelectionChanged)="onValueTypeChanged($event)"
-    [selectedItemKeys]="['Html']"
-  >
-    <dxi-item text="Html"></dxi-item>
-    <dxi-item text="Markdown"></dxi-item>
-  </dx-button-group>
-  <div class="value-content">{{ valueContent }}</div>
-</div>
-
-
-<div id="articleArea">
-
-</div> -->

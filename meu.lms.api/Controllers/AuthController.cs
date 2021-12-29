@@ -40,7 +40,6 @@ namespace meu.lms.api.Controllers
                 return Unauthorized("Kullanıcı Bulunamadı.");
             }
 
-            //var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded)
@@ -49,8 +48,6 @@ namespace meu.lms.api.Controllers
             }
 
 
-            //JwtFactory jwtFactory = new JwtFactory();
-            //var token = jwtFactory.CreateJwt(user);
             var token = _tokenService.CreateJwt(user);
 
             await _signInManager.PasswordSignInAsync(user.UserName, loginDto.Password, true, false);

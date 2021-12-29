@@ -1,17 +1,39 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
-            <div *ngFor="let course of courses" class="list-group">
-                <a href="myCourses#" class="list-group-item">{{course.name}}</a>
-                <button *ngFor="let task of course.tasks" (click)='getTaskId(task.id)' class="list-group-item">{{task.title}}</button>
-            
-                <!-- <div class="list-group">
-                  <button *ngFor="let task of course.tasks" (click)='getTaskId(task.id)' class="list-group-item">{{task.title}}</button>
-                </div> -->
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Derslerim
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{courses.length}} Adet Ders
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-accordion *ngFor="let course of courses">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{course.name}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <mat-divider></mat-divider>
+                            <div id="post-body-{{course.id}}" class="my-2">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" *ngFor="let task of course.tasks" (click)='getTaskId(task.id)'
+                                >{{task.title}}</button>
+                      </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <div class="col-md-2"></div>
+            <div class="col-md-12 my-2">
+                <app-task-assignments></app-task-assignments>
             </div>
-        </div>
-        <div class="col-md-5">
-            <app-task-assignments></app-task-assignments>
         </div>
     </div>
 </div>

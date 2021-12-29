@@ -180,7 +180,6 @@ namespace meu.lms.api.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("allAssignments")]
         [TypeFilter(typeof(ValidInstructorRole))]
-        //public IActionResult GetAllAssignments(DataSourceLoadOptions loadOptions)
         public IActionResult GetAllAssignments()
         {
 
@@ -225,10 +224,6 @@ namespace meu.lms.api.Controllers
 
                 taskListModels = new List<TaskListModel>();
             }
-
-            //loadOptions.PrimaryKey = new[] { "id" };
-            //loadOptions.PaginateViaPrimaryKey = true;
-            //return Json(DataSourceLoader.Load(_courseDal.GetAll().AsEnumerable(), loadOptions));
 
 
             return Ok(courseListModels);
