@@ -24,13 +24,17 @@ import { TaskAssignmentsComponent } from './pages/my-courses/task-assignments/ta
 import { PostArticleComponent } from './pages/post-article/post-article.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ChatComponent } from './pages/chat/chat.component';
+import { TaskComponent } from './pages/task/task.component';
+import { UpdateTaskComponent } from './pages/task/update-task/update-task.component';
 @NgModule({
   declarations: [
     AppComponent,
     MyCoursesComponent,
     TaskAssignmentsComponent,
     PostArticleComponent,
-    ChatComponent
+    ChatComponent,
+    TaskComponent,
+    UpdateTaskComponent
   ],
   imports: [
     BrowserModule,

@@ -85,6 +85,17 @@ namespace meu.lms.api.Controllers
             return Created("", assignmentAddModel);
         }
 
+        [HttpDelete("{assignmentId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult Delete(int assignmentId){
+            var appuserId = Convert.ToInt32(HttpContext.User?.Claims?.FirstOrDefault(I => I.Type == ClaimTypes.NameIdentifier)?.Value);
+
+            var assignment = _assignmentDal.GetAllAssignments().Where(I=>I.Id == assignmentId).Single();
+            _assignmentDal.Delete(assignment);
+
+            return NoContent();
+        }
+
         [HttpPut]
         [Consumes("multipart/form-data")]
         [Authorize(AuthenticationSchemes = "Bearer")]

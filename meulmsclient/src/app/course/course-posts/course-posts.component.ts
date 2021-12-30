@@ -26,20 +26,15 @@ export class CoursePostsComponent implements OnInit {
   getPosts() {
     this.articleService.getPostsByCourseId(this.activatedRouteId).subscribe(response => {
       this.courseArticles = response; 
-      console.log(this.courseArticles)
     })
   }
 
   insertHTML(text:any, id:any){
 
-    console.log("clicked")
 
     let element = document.getElementById('post-body-'+ id);
 
     element!.innerHTML = text;
-
-
-    // element?.insertAdjacentHTML('beforebegin', text);
 
   }
 

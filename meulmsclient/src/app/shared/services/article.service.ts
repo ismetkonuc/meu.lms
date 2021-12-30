@@ -19,7 +19,6 @@ export class ArticleService {
 
   getPostsByCourseId(courseId:number){
 
-    console.log(courseId);
     let currentUserToken = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
@@ -32,14 +31,12 @@ export class ArticleService {
 
   postArticle(articleModel:any){
 
-    // console.log(articleModel);
 
     let currentUserToken = localStorage.getItem('token');
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
     
     return this.http.post('http://localhost:5000/api/articles', articleModel,{headers : headers})
-    // return this.http.post('https://localhost:44336/api/Articles', articleModel)
   }
   
 }

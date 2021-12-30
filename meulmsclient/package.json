@@ -23,6 +23,7 @@
     "@angular/router": "~12.0.0",
     "@aspnet/signalr": "^1.0.27",
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "@ng-select/ng-select": "^8.1.1",
     "@types/chart.js": "^2.9.34",
     "angular-bootstrap-md": "^12.0.0",
     "animate.css": "^4.1.1",

@@ -24,7 +24,6 @@ export class MyCoursesService {
     headers = headers.set('Authorization', `Bearer ${token}`)
 
     return this.httpClient.get<ICourseList[]>(this.baseUrl + 'Assignments/allAssignments', {headers});
-
   }
 
   getHeader(){

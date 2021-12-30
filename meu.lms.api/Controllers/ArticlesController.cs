@@ -71,11 +71,6 @@ namespace meu.lms.api.Controllers
             return Ok(articleListViewModels.OrderByDescending(I=>I.PostedTime));
         }
 
-        //[HttpGet("{articleId}")]
-        //public IActionResult GetCourseArticleWithId(int articleId)
-        //{
-        //    return Ok(_articleService.GetAll().Single(I => I.CourseId == articleId));
-        //}
 
         [HttpPost]
         [TypeFilter(typeof(ValidInstructorRole))]

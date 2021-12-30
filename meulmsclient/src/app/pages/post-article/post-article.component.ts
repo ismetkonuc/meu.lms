@@ -18,6 +18,7 @@ export class PostArticleComponent implements OnInit {
   title:string='';
   selected = '';
   articleModel:IArticleAddModel = {courseId: 0, text:this.valueContent, title:''};
+  
   constructor(private articleService:ArticleService, private courseService:CourseService, private toastr: ToastrService) {
     this.valueContent = articleService.getMarkup();
    }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using AutoMapper;
+using meu.lms.api.CustomFilters;
 using meu.lms.business.Interfaces;
 using meu.lms.dto.DTOs.AssignmentDTOs;
 using meu.lms.dto.DTOs.TaskDTOs;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 namespace meu.lms.api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -35,7 +37,6 @@ namespace meu.lms.api.Controllers
             return Ok(_mapper.Map<List<TaskListDto>>(_taskService.GetAllTasks()));
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("{courseId}")]
         public IActionResult GetCourseTasks(int courseId)
         {
@@ -76,8 +77,17 @@ namespace meu.lms.api.Controllers
             return Ok(_mapper.Map<TaskListDto>(courseTasks.Where(I => I.Id == taskId).Single()));
         }
 
+        [HttpGet("single/{taskId}")]
+        public IActionResult GetSingleTask(int taskId)
+        {
+            var task = _taskService.GetTaskWithId(taskId);
+
+            return Ok(_mapper.Map<TaskListDto>(task));
+        }
+
         [HttpPost]
-        public IActionResult CreateTask([FromForm]TaskAddDto taskAddDto)
+        [TypeFilter(typeof(ValidInstructorRole))]
+        public IActionResult CreateTask([FromBody] TaskAddDto taskAddDto)
         {
 
             try
@@ -94,16 +104,18 @@ namespace meu.lms.api.Controllers
             return Created("", taskAddDto);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateTask(int id, [FromForm]TaskUpdateDto taskUpdateDto)
+        [HttpPut]
+        [TypeFilter(typeof(ValidInstructorRole))]
+
+        public IActionResult UpdateTask([FromBody] TaskUpdateDto taskUpdateDto)
         {
 
-            if (id != taskUpdateDto.Id)
-            {
-                return BadRequest("Geçersiz ID");
-            }
+            //if (taskUpdateDto != taskUpdateDto.Id)
+            //{
+            //    return BadRequest("Geçersiz ID");
+            //}
 
-            var updatedTask = _taskService.GetTaskWithId(id);
+            var updatedTask = _taskService.GetTaskWithId(taskUpdateDto.Id);
 
             updatedTask.Id = taskUpdateDto.Id;
             updatedTask.CourseId = taskUpdateDto.CourseId;

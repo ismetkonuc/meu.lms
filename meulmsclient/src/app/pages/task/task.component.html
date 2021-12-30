@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        
+      </div>
+      
+      <div class="col-md-8">
+        
+        <div class="example-form">
+          <input style="height: 40px;" class="example-full-width my-2" type="text" [(ngModel)]="title" placeholder="Başlık">
+        </div>
+      
+        <dx-html-editor [height]="300" [(valueType)]="editorValueType" [(value)]="valueContent">
+          <dxo-toolbar>
+            <dxi-item name="undo"></dxi-item>
+            <dxi-item name="redo"></dxi-item>
+            <dxi-item name="separator"></dxi-item>
+            <dxi-item name="size" [acceptedValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+            <dxi-item name="font" [acceptedValues]="[
+          'Arial',
+          'Courier New',
+          'Georgia',
+          'Impact',
+          'Lucida Console',
+          'Tahoma',
+          'Times New Roman',
+          'Verdana'
+        ]"></dxi-item>
+            <dxi-item name="separator"></dxi-item>
+            <dxi-item name="bold"></dxi-item>
+            <dxi-item name="italic"></dxi-item>
+            <dxi-item name="strike"></dxi-item>
+            <dxi-item name="underline"></dxi-item>
+            <dxi-item name="separator"></dxi-item>
+            <dxi-item name="alignLeft"></dxi-item>
+            <dxi-item name="alignCenter"></dxi-item>
+            <dxi-item name="alignRight"></dxi-item>
+            <dxi-item name="alignJustify"></dxi-item>
+            <dxi-item name="separator"></dxi-item>
+            <dxi-item name="color"></dxi-item>
+            <dxi-item name="background"></dxi-item>
+          </dxo-toolbar>
+        </dx-html-editor>
+  
+        <div class="options my-2">
+  
+          <!-- <button class="btn btn-md" (click)='printData()' class="list-group-item">Yayınla</button> -->
+  
+          <form class="example-form">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>Ders Seç</mat-label>
+              <mat-select [(value)]="selected">
+                <mat-option *ngFor="let course of courses" value="{{course.id}}">{{course.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>  
+  
+        <button mat-flat-button color="primary" (click)='printData()' class="stretched-link">Yayınla</button>
+        </div>
+  
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>

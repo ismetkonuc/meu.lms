@@ -5,6 +5,8 @@ import { IArticle } from 'src/app/shared/models/IArticle';
 import { IAssignment } from 'src/app/shared/models/IAssignment';
 import { ITask } from 'src/app/shared/models/ITask';
 import { ArticleService } from 'src/app/shared/services/article.service';
+import { AssignmentService } from 'src/app/shared/services/assignment.service';
+import { TaskService } from 'src/app/shared/services/task.service';
 import { CourseService } from '../course.service';
 
 @Component({
@@ -26,10 +28,11 @@ export class CourseDetailsComponent implements OnInit {
   handledTaskId: number = 0;
   counter = 0;
   panelOpenState = false;
-  constructor(private courseService: CourseService, private activatedRoute: ActivatedRoute, private http: HttpClient, private articleService: ArticleService) {
-    
+  constructor(private taskService: TaskService, private courseService: CourseService, private activatedRoute: ActivatedRoute, 
+    private http: HttpClient, private articleService: ArticleService, private assignmentService: AssignmentService) {
+
     this.activatedRouteId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
-  
+
   }
 
 
@@ -41,7 +44,7 @@ export class CourseDetailsComponent implements OnInit {
 
   getPosts() {
     this.articleService.getPostsByCourseId(this.activatedRouteId).subscribe(response => {
-      this.courseArticles = response; 
+      this.courseArticles = response;
     })
   }
 
@@ -101,6 +104,34 @@ export class CourseDetailsComponent implements OnInit {
     this.handledTaskId = id;
     this.isItUpdate = value;
     this.fileInput.nativeElement.click();
+  }
+
+  deleteTask(taskId: any) {
+    var res = window.confirm("Bu ödev silinecek emin misiniz?");
+    if (res) {
+      this.taskService.deleteTask(taskId).subscribe(res => {
+        console.log(res)
+        this.ngOnInit();
+      });
+    }
+  }
+
+  deleteAssignment(assignmentId:any){
+
+    var res = window.confirm("Bu gönderim silinecek emin misiniz?");
+
+    if(res){
+      this.assignmentService.deleteAssignment(assignmentId).subscribe(res => {
+        this.ngOnInit();
+      });
+    }
+  }
+
+  insertHTML(text:any, id:any){
+
+    var cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
+    return cleanText;
+
   }
 
 

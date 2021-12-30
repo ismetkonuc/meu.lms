@@ -44,8 +44,6 @@ export class TaskAssignmentsComponent implements OnInit {
       this.taskId = task;
       this.prepareToRequest();
     })
-
-
   }
 
   prepareToRequest(){

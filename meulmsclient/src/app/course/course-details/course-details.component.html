@@ -25,7 +25,13 @@
           <!-- Tab 1 -->
           <mat-tab label="Detay">
             <div class="my-2">
-              {{courseTask.detail}}
+              
+              {{insertHTML(courseTask.detail, courseTask.id)}}
+              
+              <div class="my-2">
+                <button class="btn btn-sm btn-outline-primary mx-2" routerLink="/task/{{courseTask.id}}">Güncelle</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(courseTask.id)">Sil</button>
+              </div>
             </div>
           </mat-tab>
 
@@ -68,6 +74,9 @@
               <h3>Notlandırıldı: {{courseTask.assignment.score}}</h3>
             </div>
 
+            <div>
+              <button class="btn btn-sm btn-outline-danger"(click)="deleteAssignment(courseTask.assignment.id)" >Gönderimi Sil</button>
+            </div>
           </mat-tab>
 
         </mat-tab-group>
