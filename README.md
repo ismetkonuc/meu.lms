@@ -5,7 +5,8 @@ A system that monitors the project between the Academician and the Student.
 
 ## Technical Features
 
-- Angular 12 & .NET Core 3.1
+- Angular 12 & .NET Core 3.1 WEB API
+- RESTful
 - Entity Framework Core
 - Identity Framework & JWT
 - Automapper
