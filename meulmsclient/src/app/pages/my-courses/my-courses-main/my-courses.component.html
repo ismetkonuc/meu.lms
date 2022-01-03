@@ -31,7 +31,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
             <div class="col-md-2"></div>
-            <div class="col-md-12 my-2">
+            <div class="col-md-12 my-2" *ngIf="userRole !== 'Student' ">
                 <app-task-assignments></app-task-assignments>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -11,6 +12,7 @@ using meu.lms.business.Interfaces;
 using meu.lms.dto.DTOs.AssignmentDTOs;
 using meu.lms.dto.DTOs.TaskDTOs;
 using meu.lms.entities.Concrete;
+using meu.lms.entities.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -48,6 +50,12 @@ namespace meu.lms.api.Controllers
             foreach (var task in tasks)
             {
 
+                if (DateTime.Now > task.ExpirationDate && task.Status == Status.Active)
+                {
+                    task.Status = Status.Expired;
+                    _taskService.Update(_mapper.Map<Task>(task));
+                }
+
                 AssignmentListDto assignmentListDto = new AssignmentListDto()
                 {
                     AppUserId = appuserId,
@@ -82,6 +90,9 @@ namespace meu.lms.api.Controllers
         {
             var task = _taskService.GetTaskWithId(taskId);
 
+            
+
+
             return Ok(_mapper.Map<TaskListDto>(task));
         }
 
@@ -89,7 +100,7 @@ namespace meu.lms.api.Controllers
         [TypeFilter(typeof(ValidInstructorRole))]
         public IActionResult CreateTask([FromBody] TaskAddDto taskAddDto)
         {
-
+            taskAddDto.ExpirationDate = DateTime.Parse(taskAddDto.ExpirationDateAsString);
             try
             {
                 _taskService.Save(_mapper.Map<Task>(taskAddDto));
@@ -109,11 +120,6 @@ namespace meu.lms.api.Controllers
 
         public IActionResult UpdateTask([FromBody] TaskUpdateDto taskUpdateDto)
         {
-
-            //if (taskUpdateDto != taskUpdateDto.Id)
-            //{
-            //    return BadRequest("Geçersiz ID");
-            //}
 
             var updatedTask = _taskService.GetTaskWithId(taskUpdateDto.Id);
 

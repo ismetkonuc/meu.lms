@@ -1,78 +1,72 @@
 <div class="container login-container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-6 login-form-2">
-            <h3>KAYIT OL</h3>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="inputEmail" class="visually-hidden">Email</label>
-                    <input formControlName="email" type="email" id="inputEmail" class="form-control" placeholder="Email *" />
-                    <span class="text-warning" *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched && registerForm.get('email').errors['required']">
-                      Email Alanı Zorunludur
-                    </span>
-                    <span class="text-warning" *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched && registerForm.get('email').errors['pattern']">
-                      Email Geçerli Değil
-                    </span>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputUsername" class="visually-hidden">Kullanıcı Adı</label>
-                    <input formControlName="username" type="username" id="inputUsername" class="form-control" placeholder="Kullanıcı Adı *" />
-                    <span class="text-warning" *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched && registerForm.get('username').errors['required']">
-                        Kullanıcı Adı Alanı Zorunludur
-                      </span>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputName" class="visually-hidden">Ad</label>
-                    <input formControlName="name" type="name" id="inputName" class="form-control" placeholder="Ad *" />
-                    <span class="text-warning" *ngIf="registerForm.get('name').invalid && registerForm.get('name').touched && registerForm.get('name').errors['required']">
-                        Ad Alanı Zorunludur
-                      </span>
-                </div>
-                
-                <div class="form-group">
-                    <label for="inputSurname" class="visually-hidden">Soyad</label>
-                    <input formControlName="surname" type="surname" id="inputSurname" class="form-control" placeholder="Soyad *" />
-                    <span class="text-warning" *ngIf="registerForm.get('surname').invalid && registerForm.get('surname').touched && registerForm.get('surname').errors['required']">
-                        Soyad Alanı Zorunludur
-                      </span>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputPassword" class="visually-hidden">Şifre</label>
-                    <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Şifre *" value="" />
-                    <span class="text-warning" *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched && registerForm.get('password').errors['required']">
-                      Şifre Alanı Zorunludur
-                    </span>
-                </div>
-
-                <div class="example-form ">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>Rol Seç</mat-label>
-                        <mat-select [(value)]="selected">
-                          <mat-option value="Instructor">Akademisyen</mat-option>
-                          <mat-option value="Student">Öğrenci</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </div>
-            
-                <div class="example-form">
-                    <ng-select
-                    [items]="cars"
-                    bindLabel="name"
-                    placeholder="Dersleri Seç"
-                    appendTo="body"
-                    [multiple]="true"
-                    [(ngModel)]="selectedItem">
-                  </ng-select>
-                </div>
-
-                <div class="form-group my-2">
-                    <input type="submit" class="btnSubmit" value="KAYIT OL" [disabled]="registerForm.invalid" />
-                </div>
-                
-            </form>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6 login-form-2">
+      <h3>KAYIT OL</h3>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="inputEmail" class="visually-hidden">Email</label>
+          <input formControlName="email" type="email" id="inputEmail" class="form-control" placeholder="Email *" />
+          <span class="text-warning"
+            *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched && registerForm.get('email').errors['required']">
+            Email Alanı Zorunludur
+          </span>
+          <span class="text-warning"
+            *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched && registerForm.get('email').errors['pattern']">
+            Email Geçerli Değil
+          </span>
         </div>
+
+        <div class="form-group">
+          <label for="inputName" class="visually-hidden">Ad</label>
+          <input formControlName="name" type="name" id="inputName" class="form-control" placeholder="Ad *" />
+          <span class="text-warning"
+            *ngIf="registerForm.get('name').invalid && registerForm.get('name').touched && registerForm.get('name').errors['required']">
+            Ad Alanı Zorunludur
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="inputSurname" class="visually-hidden">Soyad</label>
+          <input formControlName="surname" type="surname" id="inputSurname" class="form-control"
+            placeholder="Soyad *" />
+          <span class="text-warning"
+            *ngIf="registerForm.get('surname').invalid && registerForm.get('surname').touched && registerForm.get('surname').errors['required']">
+            Soyad Alanı Zorunludur
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword" class="visually-hidden">Şifre</label>
+          <input formControlName="password" type="password" id="inputPassword" class="form-control"
+            placeholder="Şifre *" value="" />
+          <span class="text-warning"
+            *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched && registerForm.get('password').errors['required']">
+            Şifre Alanı Zorunludur
+          </span>
+        </div>
+
+        <div class="example-form ">
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Rol Seç</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="Instructor">Akademisyen</mat-option>
+              <mat-option value="Student">Öğrenci</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="example-form">
+          <ng-select [items]="courses" bindLabel="name" bindValue="name" [ngModelOptions]="{standalone: true}" [multiple]="true"
+            [(ngModel)]="selectedItem">
+          </ng-select>
+        </div>
+
+        <div class="form-group my-2">
+          <input type="submit" class="btnSubmit" value="KAYIT OL" [disabled]="registerForm.invalid" />
+        </div>
+
+      </form>
     </div>
   </div>
+</div>

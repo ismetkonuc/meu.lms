@@ -20,8 +20,10 @@ interface ExampleFlatNode {
 })
 export class MyCoursesComponent implements OnInit {
   courses: ICourseList[] = [];
-
-  constructor(private myCoursesService:MyCoursesService) { }
+  userRole:any;
+  constructor(private myCoursesService:MyCoursesService) {
+    this.userRole = localStorage.getItem('role');
+   }
 
   ngOnInit(): void {
     this.loadMyCourses();

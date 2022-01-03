@@ -11,8 +11,10 @@ import { AccountService } from 'src/app/account/account.service';
 export class NavBarComponent implements OnInit {
 
   currentUser$ : Observable<IUser> = new Observable<IUser>();
-
-  constructor(private accountService : AccountService) { }
+  userRole:any;
+  constructor(private accountService : AccountService) {
+    this.userRole = localStorage.getItem('role');
+   }
 
   ngOnInit(): void {
     this.currentUser$ = this.accountService.currentUser$;

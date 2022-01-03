@@ -1,4 +1,6 @@
-﻿namespace meu.lms.dto.DTOs.AppUserDTOs
+﻿using System.Collections.Generic;
+
+namespace meu.lms.dto.DTOs.AppUserDTOs
 {
     public class AppUserRegisterDto
     {
@@ -6,6 +8,7 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Password { get; set; }
-        public string UserName { get; set; }
+        public string Role { get; set; }
+        public List<string> Courses { get; set; }
     }
 }

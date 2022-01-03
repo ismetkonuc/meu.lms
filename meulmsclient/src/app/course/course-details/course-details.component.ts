@@ -28,11 +28,12 @@ export class CourseDetailsComponent implements OnInit {
   handledTaskId: number = 0;
   counter = 0;
   panelOpenState = false;
+  userRole : any;
   constructor(private taskService: TaskService, private courseService: CourseService, private activatedRoute: ActivatedRoute, 
     private http: HttpClient, private articleService: ArticleService, private assignmentService: AssignmentService) {
 
     this.activatedRouteId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
-
+    this.userRole = localStorage.getItem('role');
   }
 
 
@@ -46,13 +47,20 @@ export class CourseDetailsComponent implements OnInit {
     this.articleService.getPostsByCourseId(this.activatedRouteId).subscribe(response => {
       this.courseArticles = response;
     })
+
   }
 
+  isExpired(date:any){
+    var dateNow = new Date();
+    var sendedDate = new Date(date);
+    console.log(dateNow>sendedDate);
+    return dateNow>sendedDate;
+  }
 
   async loadCourse() {
 
     this.courseName = await this.courseService.getCourseName(this.activatedRouteId)
-
+    
     this.courseService.getTasks(this.activatedRouteId).subscribe(courseTasks => {
       this.courseTasks = courseTasks;
     },

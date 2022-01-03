@@ -29,6 +29,7 @@ export class AccountService {
       map((user:any)=>{
         if(user){
           localStorage.setItem('token', user.token);
+          localStorage.setItem('role', user.role)
           this.currentUserSource.next(user)
         }
       })
@@ -41,16 +42,37 @@ export class AccountService {
       map((user: any) => {
       if (user) {
         localStorage.setItem('token', user.token);
+        localStorage.setItem('role', user.role);
+
+        this.currentUserSource.next(user);
+        location.href="/"
+
+      }
+    })
+    );
+  }
+
+  register(values: any) {
+    return this.httpClient.post(this.baseUrl + 'auth/register', values).pipe(
+      map((user: any) => {
+      if (user) {
+        localStorage.setItem('token', user.token);
         this.currentUserSource.next(user);
       }
     })
     );
   }
 
+
   logout() {
+    
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
+
     this.currentUserSource.next({ email: '', displayName: '', token: '' });
     this.router.navigateByUrl('/account/login');
+    // location.href="/account/login"
+
   }
 
 }

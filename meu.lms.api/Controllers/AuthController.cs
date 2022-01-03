@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,13 +20,20 @@ namespace meu.lms.api.Controllers
     {
 
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
+
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtFactory _tokenService;
-        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtFactory tokenService)
+        private readonly ICourseService _courseService;
+        private readonly ICoursePeopleService _coursePeopleService;
+        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtFactory tokenService, ICourseService courseService, ICoursePeopleService coursePeopleService, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _courseService = courseService;
+            _coursePeopleService = coursePeopleService;
+            _roleManager = roleManager;
 
         }
 
@@ -52,12 +60,15 @@ namespace meu.lms.api.Controllers
 
             await _signInManager.PasswordSignInAsync(user.UserName, loginDto.Password, true, false);
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
             return new AppUserDto()
             {
                 Name = user.Name,
                 Email = loginDto.Email,
                 Token = token,
-                DisplayName = user.Name
+                DisplayName = user.Name,
+                Role = userRoles.First()
             };
         }
 
@@ -66,9 +77,18 @@ namespace meu.lms.api.Controllers
         public async Task<ActionResult<AppUserDto>> Register(AppUserRegisterDto registerDto)
         {
 
+            var appUser = await _userManager.FindByEmailAsync(registerDto.Email);
+
+
+            if (appUser != null)
+            {
+                return BadRequest("Bu mail adresi zaten kayıtlı!");
+            }
+
+
             if (registerDto == null)
             {
-                throw new NullReferenceException("Register Model is null!");
+                throw new NullReferenceException("Register Model geçerli değil!");
             }
 
             
@@ -76,26 +96,53 @@ namespace meu.lms.api.Controllers
             {
 
                 Email = registerDto.Email,
-                UserName = registerDto.UserName,
+                UserName = registerDto.Email,
                 Surname = registerDto.Surname,
                 Name = registerDto.Name,
 
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            await _userManager.AddToRoleAsync(user, "Student");
+            await _userManager.AddToRoleAsync(user, registerDto.Role);
+
+            List<int> courseIds = new List<int>();
+            var courses = _courseService.GetAll();
+            var newUser = await _userManager.FindByEmailAsync(registerDto.Email);
+
+            foreach (var course in registerDto.Courses)
+            {
+                   courseIds.Add(courses.Single(I=>I.Name == course).Id);
+            }
+
+            foreach (var courseId in courseIds)
+            {
+                _coursePeopleService.Save(new CoursePeople()
+                {
+                    PersonId = newUser.Id,
+                    CourseId = courseId
+                });
+            }
+
 
             if (result.Succeeded)
             {
-                return Ok();
+                var token = _tokenService.CreateJwt(user);
+
+                await _signInManager.PasswordSignInAsync(user.UserName, registerDto.Password, true, false);
+
+                return new AppUserDto()
+                {
+                    Name = user.Name,
+                    Email = registerDto.Email,
+                    Token = token,
+                    DisplayName = user.Name
+                };
             }
 
             return BadRequest();
         }
 
 
-        //[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("currentuser")]
         public async Task<ActionResult<AppUserDto>> GetCurrentUserInfo()
@@ -113,11 +160,17 @@ namespace meu.lms.api.Controllers
             //var user = _appUserService.GetCurrentUser(email);
             var user = await _userManager.FindByIdAsync(userId);
 
+            var token = _tokenService.CreateJwt(user);
+
+             var userRoles = await _userManager.GetRolesAsync(user);
+
             return new AppUserDto()
             {
                 Name = user.Name,
                 Email = user.Email,
-                DisplayName = user.Name
+                DisplayName = user.Name,
+                Token = token,
+                Role = userRoles.First()
             };
         }
 

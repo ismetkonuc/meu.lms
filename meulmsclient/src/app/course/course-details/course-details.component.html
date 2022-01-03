@@ -2,6 +2,8 @@
   <h1>{{courseName}}</h1>
 </div>
 
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-12 my-2">
@@ -28,7 +30,8 @@
               
               {{insertHTML(courseTask.detail, courseTask.id)}}
               
-              <div class="my-2">
+
+              <div class="my-2" *ngIf="userRole !== 'Student'">
                 <button class="btn btn-sm btn-outline-primary mx-2" routerLink="/task/{{courseTask.id}}">Güncelle</button>
                 <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(courseTask.id)">Sil</button>
               </div>
@@ -40,6 +43,7 @@
 
             <div *ngIf="courseTask.status">
 
+              <!-- <mat-card *ngIf="!isExpired(courseTask.expirationDate)"> -->
               <mat-card>
                 <h3>Kabul edilen formatlar: .pdf .docx .jpeg .png .zip .rar </h3>
                 <div *ngIf="courseTask.assignment.isSent">
@@ -52,10 +56,9 @@
                   <button mat-raised-button class="file-select-button"
                     (click)="onClickFileInputButton(false, courseTask.id)" name="file">Dosya Yükle</button>
                 </div>
-
-
-                <h4 class="my-2">Son Gönderim: {{courseTask.expirationDate | date: 'dd/MM/yyyy - HH:mm:ss'}}</h4>
               </mat-card>
+            
+              <h4 class="my-2">Son Gönderim: {{courseTask.expirationDate | date: 'dd/MM/yyyy - HH:mm:ss'}}</h4>
 
             </div>
             <div *ngIf="!courseTask.status" class="my-4">

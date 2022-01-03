@@ -54,9 +54,15 @@
               </mat-select>
             </mat-form-field>
           </form>  
-  
-        <button mat-flat-button color="primary" (click)='printData()' class="stretched-link">Yayınla</button>
-        </div>
+
+          <mat-form-field appearance="fill" class="example-full-width">
+            <input matInput [matDatepicker]="picker" placeholder="Son Gönderim Tarihi"
+                   (dateInput)="addEvent($event)" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          
+          <button mat-flat-button color="primary" (click)='printData()' class="stretched-link">Yayınla</button>
   
       </div>
       <div class="col-md-2"></div>
