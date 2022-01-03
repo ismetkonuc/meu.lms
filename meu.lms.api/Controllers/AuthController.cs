@@ -147,17 +147,9 @@ namespace meu.lms.api.Controllers
         [HttpGet("currentuser")]
         public async Task<ActionResult<AppUserDto>> GetCurrentUserInfo()
         {
-            //HttpContext.User.Identity.
-
-            //var tokenHandler = new JwtSecurityTokenHandler();
-            //var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-
-            //var claims = securityToken.Claims;
-
 
             var userId = HttpContext.User?.Claims?.FirstOrDefault(I => I.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            //var user = _appUserService.GetCurrentUser(email);
             var user = await _userManager.FindByIdAsync(userId);
 
             var token = _tokenService.CreateJwt(user);

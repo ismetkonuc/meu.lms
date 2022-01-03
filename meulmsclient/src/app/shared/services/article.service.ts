@@ -24,7 +24,6 @@ export class ArticleService {
     headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
 
 
-    // return this.http.get<IArticle[]>('http://localhost:5000/api/Articles/'+ courseId, {headers:headers})
     return this.http.get<IArticle[]>('https://localhost:44336/api/Articles/'+ courseId, {headers:headers} )
   
   }

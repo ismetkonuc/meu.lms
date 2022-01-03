@@ -41,25 +41,4 @@ export class MyCoursesComponent implements OnInit {
       console.log(response)
     })
   }
-
-  // private _transformer = (node: ICourseList, level: number) => {
-  //   return {
-  //     expandable: !!node.tasks && node.tasks.length > 0,
-  //     name: node.name,
-  //     level: level,
-  //   };
-  // }
-
-  // treeControl = new FlatTreeControl<ExampleFlatNode>(
-  //   node => node.level,
-  //   node => node.expandable,
-  // );
-
-  // treeFlattener = new MatTreeFlattener(
-  //   this._transformer,
-  //   node => node.level,
-  //   node => node.expandable,
-  //   node => node.tasks,
-  // );
-  // dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 }

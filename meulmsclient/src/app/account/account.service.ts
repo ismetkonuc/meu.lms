@@ -71,7 +71,6 @@ export class AccountService {
 
     this.currentUserSource.next({ email: '', displayName: '', token: '' });
     this.router.navigateByUrl('/account/login');
-    // location.href="/account/login"
 
   }
 

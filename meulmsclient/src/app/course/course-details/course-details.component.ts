@@ -69,13 +69,6 @@ export class CourseDetailsComponent implements OnInit {
       })
   }
 
-  // getCurrentUserAssignments(){
-  //   this.courseService.getUserAssignments(this.activatedRouteId).subscribe(response => {
-  //     console.log(response)
-  //     this.userAssignments = response;
-  //   });
-  // }
-
 
   onChangeFileInput() {
 

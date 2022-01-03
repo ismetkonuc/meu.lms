@@ -62,9 +62,6 @@ namespace meu.lms.api.Controllers
                     Title = coursePost.Title
                 });
 
-                //articleListViewModel.AppUserFullName = $"{appUser.Name} {appUser.Surname}";
-                //articleListViewModel.Id = coursePost.Id;
-                //articleListViewModel.Text = coursePost.Text;
             }
 
 

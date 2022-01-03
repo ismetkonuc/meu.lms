@@ -20,7 +20,7 @@
         <h2>{{courseTask.title}} -- {{courseTask.creationDate | date: 'dd/MM/yyyy - HH:mm:ss'}}</h2>
       </div>
 
-      <!-- Tab Başlangıç -->
+      <!-- Tab Start -->
       <mat-card>
         <mat-tab-group animationDuration="0ms">
 
@@ -43,7 +43,6 @@
 
             <div *ngIf="courseTask.status">
 
-              <!-- <mat-card *ngIf="!isExpired(courseTask.expirationDate)"> -->
               <mat-card>
                 <h3>Kabul edilen formatlar: .pdf .docx .jpeg .png .zip .rar </h3>
                 <div *ngIf="courseTask.assignment.isSent">
@@ -83,25 +82,8 @@
           </mat-tab>
 
         </mat-tab-group>
-        <!-- Tab Bitiş -->
+        <!-- Tab End -->
       </mat-card>
     </div>
   </div>
 </div>
-
-
-<!-- <div class="col-md-12">
-  <p *ngFor="let courseArticle of courseArticles">{{convertPostsToHTML(courseArticle)}}</p>
-</div> -->
-
-
-
-
-
-<!-- <li>{{courseTask.id}}</li>
-    <li>{{courseTask.title}}</li>
-    <li>{{courseTask.detail}}</li>
-    <li>{{courseTask.creationDate}}</li>
-    <li>{{courseTask.expirationDate}}</li>
-    <li>{{courseTask.status}}</li>
-    <li>{{courseTask.courseId}}</li> -->

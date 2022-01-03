@@ -55,7 +55,6 @@ namespace meu.lms.api.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Consumes("multipart/form-data")]
-        //public IActionResult Create([FromForm]AssignmentAddModel assignmentAddModel)
         public IActionResult Create([FromForm] AssignmentAddModel assignmentAddModel)
         {
 
@@ -181,7 +180,6 @@ namespace meu.lms.api.Controllers
 
             }
 
-            //_assignmentDal.GetSpesificUserAssignments(appuserId).Where(I=>I.)
 
             return Ok(assignments);
 
@@ -243,7 +241,7 @@ namespace meu.lms.api.Controllers
         [HttpGet("assignScore/{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [TypeFilter(typeof(ValidInstructorRole))]
-        public async Task<IActionResult> AssignScore(int id) // and need taskId
+        public async Task<IActionResult> AssignScore(int id)
         {
             var assignments = new List<Assignment>();
 
@@ -266,7 +264,6 @@ namespace meu.lms.api.Controllers
                 });
             }
 
-            //var assignmentListDto = _mapper.Map<AssignmentListDto>(assignments);
             DataSourceLoadOptions loadOptions = new DataSourceLoadOptions();
             loadOptions.PrimaryKey = new[] { "id" };
             loadOptions.PaginateViaPrimaryKey = true;

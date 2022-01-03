@@ -37,9 +37,6 @@ export class PostArticleComponent implements OnInit {
     this.articleModel.text = this.valueContent;
     this.articleModel.title = this.title;
     this.articleService.postArticle(this.articleModel).subscribe();
-
-    // console.log(this.valueContent);
-
   }
 
   getCourses(){
