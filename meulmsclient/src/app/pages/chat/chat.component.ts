@@ -1,4 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { IMessageList } from 'src/app/shared/models/IMessageList';
+import { IUserChat } from 'src/app/shared/models/IUserChat';
 import { Message } from 'src/app/shared/models/Message';
 import { ChatService } from './chat.service';
 
@@ -11,40 +13,29 @@ export class ChatComponent implements OnInit {
 
   title = 'ClientApp';  
   txtMessage: string = '';  
-  uniqueID: string = new Date().getTime().toString();  
-  messages = new Array<Message>();  
-  message = new Message();  
+  messages: Message[] = [];
+  chatbox: IUserChat[] = [];
+  searchString = ''
 
-  constructor(private chatService: ChatService,  private _ngZone: NgZone) { 
-    this.subscribeToEvents();  
+
+  constructor(private chatService:ChatService) { 
+    this.getUserChat();
   }
 
   ngOnInit(): void {
   }
 
-  sendMessage(): void {  
-    if (this.txtMessage) {  
-      this.message = new Message();  
-      this.message.clientuniqueid = this.uniqueID;  
-      this.message.type = "sent";  
-      this.message.message = this.txtMessage;  
-      this.message.date = String(new Date());  
-      this.messages.push(this.message);  
-      this.chatService.sendMessage(this.message);  
-      this.txtMessage = ''; 
-    }  
-  } 
 
-  private subscribeToEvents(): void {  
-  
-    this.chatService.messageReceived.subscribe((message: Message) => {  
-      this._ngZone.run(() => {  
-        if (message.clientuniqueid !== this.uniqueID) {  
-          message.type = "received";  
-          this.messages.push(message);  
-        }  
-      });  
-    });  
-  } 
+  getUserChat(){
+    this.chatService.getUserChats().subscribe((response:any)=>{
+      this.chatbox = response;
+      console.log(this.chatbox)
+    })
+  }
+
+  getTargetUser(id:number){
+    this.chatService.getTargetUser(id);
+  }
+ 
 
 }

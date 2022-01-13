@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.AccessControl;
 using meu.lms.entities.Interface;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,6 +14,6 @@ namespace meu.lms.entities.Concrete
         public List<CoursePeople> Courses { get; set; }
         public List<Assignment> Assignments { get; set; }
         public List<Article> Articles { get; set; }
-
+        public List<Message> Messages { get; set; }
     }
 }

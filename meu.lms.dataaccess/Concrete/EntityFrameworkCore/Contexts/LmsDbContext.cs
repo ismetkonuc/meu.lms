@@ -18,6 +18,7 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts
             builder.ApplyConfiguration(new TaskConfiguration());
             builder.ApplyConfiguration(new CourseConfiguration());
             builder.ApplyConfiguration(new AppUserConfiguration());
+            builder.ApplyConfiguration(new MessageConfiguration());
             //builder.ApplyConfiguration(new AppUserRoleConfiguration());
             //builder.ApplyConfiguration(new AppRoleConfiguration());
             builder.ApplyConfiguration(new CoursePeopleConfiguration());
@@ -35,5 +36,6 @@ namespace meu.lms.dataaccess.Concrete.EntityFrameworkCore.Contexts
         public DbSet<CoursePeople> CoursePeoples { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

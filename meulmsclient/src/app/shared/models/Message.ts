@@ -1,6 +1,5 @@
 export class Message {
-    clientuniqueid: string = '';
-    type: string = '';
-    message: string = '';
-    date: string = '';
+    content: string = '';
+    sentTime: string = '';
+    type:string = '';
 }

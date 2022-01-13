@@ -9,5 +9,9 @@ namespace meu.lms.dataaccess.Interfaces
         List<AppUser> GetStundets();
         AppUser GetCurrentUser(string email);
         List<Course> GetUserCourses(int appUserId);
+        List<Message> GetMessages(int ClientUserId, int TargetUserId);
+        List<AppUser> GetMessageList(int appUserId);
+        List<AppUser> GetUserList();
+        List<AppUser> GetInstructors();
     }
 }

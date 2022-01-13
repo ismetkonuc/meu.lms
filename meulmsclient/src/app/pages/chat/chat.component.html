@@ -1,40 +1,69 @@
-<div class="container">  
-    <h3 class=" text-center chat_header">Chat Application</h3>  
-    <div class="messaging">  
-      <div class="inbox_msg">  
-        <div class="mesgs">  
-          <div class="msg_history">  
-            <div *ngFor="let msg of messages">  
-            <div class="incoming_msg" *ngIf="msg.type == 'received'">  
-              <div class="incoming_msg_img"> </div>  
-              <div class="received_msg">  
-                <div class="received_withd_msg">  
-                  <p>  
-                   {{msg.message}}   
-                  </p>  
-                  <span class="time_date"> {{msg.date | date:'medium'}} </span>  
-                </div>  
-              </div>  
-            </div>  
-            <div class="outgoing_msg" *ngIf="msg.type == 'sent'">  
-              <div class="sent_msg">  
-                <p>  
-                    {{msg.message}}   
-                </p>  
-                <span class="time_date"> {{msg.date | date:'medium'}}</span>  
-              </div>  
-            </div>  
-          </div>  
-          </div>  
-          <div class="type_msg">  
-            <div class="input_msg_write">  
-              <input type="text" class="write_msg" [value]="txtMessage"  
-              (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="Type a message" />  
-              <button class="msg_send_btn" type="button"  (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>  
-            </div>  
-          </div>  
-        </div>  
-      </div>  
-    
-    </div>  
-  </div>  
+<div class="messaging">
+  <div class="inbox_msg">
+    <div class="inbox_people">
+      <div class="headind_srch">
+        <div class="recent_heading">
+          <h5>Mesajlaşabileceğiniz Kullanıcılar</h5>
+        </div>
+        <div class="srch_bar">
+          <div class="stylish-input-group">
+            <input type="text" class="search-bar" placeholder="Ara" [(ngModel)]="searchString">
+          </div>
+        </div>
+      </div>
+      <div class="inbox_chat scroll">
+        <!-- <div class="chat_list active_chat">
+          <div class="chat_people">
+            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+            <div class="chat_ib">
+              <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+              <p>Test, which is a new approach to have all solutions
+                astrology under one roof.</p>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="chat_list" *ngFor="let chat of (chatbox | search:searchString)as folder">
+          <div class="chat_people" (click)='getTargetUser(chat.appUserId)'>
+            <div class="chat_img"> <img src="../../../assets/images/user.png" alt="sunil"> </div>
+            <div class="chat_ib">
+              <h5>{{chat.name}} {{chat.surname}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-chat-box></app-chat-box>
+    <!-- <div class="mesgs">
+      <div class="msg_history">
+
+        <div *ngFor="let message of messages">
+          <div class="incoming_msg" *ngIf="message.type == 'Received'">
+            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+            </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>{{message.content}}</p>
+                <span class="time_date"> {{message.sentTime}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="outgoing_msg" *ngIf="message.type == 'Sended'">
+            <div class="sent_msg">
+              <p>{{message.content}}</p>
+              <span class="time_date"> {{message.sentTime}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="type_msg">
+        <div class="input_msg_write">
+          <input type="text" class="write_msg" placeholder="Type a message" />
+          <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

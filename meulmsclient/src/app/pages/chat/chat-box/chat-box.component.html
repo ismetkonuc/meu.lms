@@ -1,0 +1,34 @@
+<div class="mesgs">
+    <div class="msg_history">
+
+      <div *ngFor="let message of messages">
+        <div class="incoming_msg" *ngIf="message.type == 'Received'">
+          <div class="incoming_msg_img"> <img src="../../../assets/images/user.png" alt="sunil">
+          </div>
+          <div class="received_msg">
+            <div class="received_withd_msg">
+              <p>{{message.content}}</p>
+              <span class="time_date"> {{message.sentTime | date: 'dd/MM/yyyy - HH:mm'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="outgoing_msg" *ngIf="message.type == 'Sended'">
+          <div class="sent_msg">
+            <p>{{message.content}}</p>
+            <span class="time_date"> {{message.sentTime | date: 'dd/MM/yyyy - HH:mm'}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="type_msg">
+      <div class="input_msg_write">
+        <form (submit)="sendMessage()">
+          <input [(ngModel)]="content" name="content" type="text" class="write_msg" placeholder="{{inputVal}}" id="sendMsg"/>
+          <button class="msg_send_btn" onclick="document.getElementById('sendMsg').value = ''" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </form>
+        
+      </div>
+    </div>
+  </div>

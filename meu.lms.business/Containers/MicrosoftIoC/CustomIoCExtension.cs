@@ -19,7 +19,7 @@ namespace meu.lms.business.Containers.MicrosoftIoC
             services.AddScoped<ICourseService, CourseManager>();
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<ICoursePeopleService, CoursePeopleManager>();
-
+            services.AddScoped<IMessageService, MessageManager>();
 
 
             services.AddScoped<ITaskDal, EfTaskRepository>();
@@ -28,7 +28,7 @@ namespace meu.lms.business.Containers.MicrosoftIoC
             services.AddScoped<IAssignmentDal, EfAssignmentRepository>();
             services.AddScoped<IArticleDal, EfArticleRepository>();
             services.AddScoped<ICoursePeopleDal, EfCoursePeopleRepository>();
-
+            services.AddScoped<IMessageDal, EfMessageRepository>();
 
 
 

@@ -3,53 +3,62 @@ import { EventEmitter } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';  
 import { Message } from 'src/app/shared/models/Message';
+import { IMessageList } from 'src/app/shared/models/IMessageList';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IUserChat } from 'src/app/shared/models/IUserChat';
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  messageReceived = new EventEmitter<Message>();  
-  connectionEstablished = new EventEmitter<Boolean>();  
+  targetUserId = -1;
+  targetUser: BehaviorSubject<number>;
 
-  private connectionIsEstablished = false;  
-  private _hubConnection: any;  
-
-  constructor() {
-    this.createConnection();  
-    this.registerOnServerEvents();  
-    this.startConnection();
+  constructor(private http:HttpClient) {
+      this.targetUser = new BehaviorSubject(this.targetUserId);
    }
 
-   sendMessage(message: Message) {  
-    
-    this._hubConnection.invoke('NewMessage', message).then((data:any)=>console.log(data));  
-  }  
+   
   
-  private createConnection() {  
-    this._hubConnection = new signalR.HubConnectionBuilder()  
-      .withUrl("https://localhost:44336/messagehub")  
-      .build();  
-  } 
+   getMessages(targetUserId:number) {
+    let currentUserToken = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
 
-  private startConnection(): void {  
-    this._hubConnection  
-      .start()  
-      .then(() => {  
-        this.connectionIsEstablished = true;  
-        console.log('Hub connection started');  
-        this.connectionEstablished.emit(true);  
-      })  
-      .catch( (err:any) => {  
-        console.log('Error while establishing connection, retrying...');  
-        setTimeout(function (this: ChatService) { this.startConnection(); }, 5000);  
-      });  
-  }  
+     return this.http.get<IMessageList[]>('https://localhost:44336/api/Chat?targetUserId='+ targetUserId, {headers : headers})
+   }
 
-  private registerOnServerEvents(): void {  
-    this._hubConnection.on('MessageReceived', (data: any) => {  
-      this.messageReceived.emit(data);  
-      console.log(data)
-    });  
-  }  
+   getLastMessageId(targetUserId:number) {
+    let currentUserToken = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
+
+     return this.http.get<number>('https://localhost:44336/api/Chat/lastMessage?targetUserId'+ targetUserId, {headers : headers})
+   }
+  
+   getUserChats() {
+
+    let currentUserToken = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
+
+    return this.http.get<IUserChat[]>('https://localhost:44336/api/Chat/userList', {headers : headers})
+  }
+
+  getTargetUser(id:number){
+    this.targetUser.next(id);
+  }
+
+  sendMessage(messageModel:any){
+    let currentUserToken = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${currentUserToken}`)
+
+    return this.http.post('https://localhost:44336/api/Chat',messageModel, {headers: headers})
+  }
+
+  
 
 }

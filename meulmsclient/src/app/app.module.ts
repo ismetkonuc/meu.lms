@@ -26,6 +26,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ChatComponent } from './pages/chat/chat.component';
 import { TaskComponent } from './pages/task/task.component';
 import { UpdateTaskComponent } from './pages/task/update-task/update-task.component';
+import { ChatBoxComponent } from './pages/chat/chat-box/chat-box.component';
+import { SearchPipe } from './pages/chat/search.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +36,9 @@ import { UpdateTaskComponent } from './pages/task/update-task/update-task.compon
     PostArticleComponent,
     ChatComponent,
     TaskComponent,
-    UpdateTaskComponent
+    UpdateTaskComponent,
+    ChatBoxComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

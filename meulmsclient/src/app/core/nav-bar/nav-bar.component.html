@@ -23,7 +23,7 @@
       <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle><strong>{{ (currentUser$ | async)?.displayName}}</strong></a>
       <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
       <a class="dropdown-item d-flex align-item-center py-2">
-        <i class="fa fa-user mr-3 my-2">  Profil</i>
+        <i class="fa fa-comment mr-3 my-2" [routerLink]="['chat']">  Mesajlarım</i>
       </a>
       <a class="dropdown-item d-flex align-item-center py-2">
         <i class="fa fa-book mr-3" [routerLink]="['myCourses']"> Derslerim</i>
